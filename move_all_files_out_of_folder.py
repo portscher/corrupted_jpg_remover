@@ -13,7 +13,7 @@ def main():
         files = os.listdir(f"{folder}{sub}")
         for file in files:
             shutil.move(f"{folder}{sub}/{file}", f"{folder}/{file}")
-            print(f"Moved all files from {sub}.")
+        print(f"Moved all files from {sub}.")
 
 
 if __name__ == '__main__':
