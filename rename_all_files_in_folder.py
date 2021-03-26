@@ -11,8 +11,8 @@ def main():
     counter = 0
     for file in files:
         new_name = f"{name}_{counter}"
-        os.rename(f"{folder}{file}", f"{folder}{new_name}")
-        counter = +1
+        os.rename(f"{folder}{file}", f"{folder}{new_name}.jpg")
+        counter += 1
 
 
 if __name__ == '__main__':
