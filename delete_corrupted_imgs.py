@@ -1,26 +1,24 @@
 #!/usr/bin/python3
 
-# find corrupted images and delete them
-import cv2
 import os
 import sys
 
-folder = sys.argv[1]
-print(f"checking images in folder {folder}")
+import cv2
 
 
-def verify_image(img_file):
-    img = cv2.imread(img_file)
-    return True if img is None else False
+def remove_corrupted_img(img_file):
+    if cv2.imread(img_file) is None:
+        print(f"deleting {img_file}")
+        try:
+            os.remove(img_file)
+        except OSError:
+            print("Something went wrong.")
 
 
-for root, dirs, files in os.walk(folder):
-    for file in files:
-        if file.endswith(".jpg"):
-            currentFile = os.path.join(root, file)
-            if not verify_image(currentFile):
-                print(f"deleting {currentFile}")
-                try:
-                    os.remove(currentFile)
-                except OSError:
-                    print("Something went wrong.")
+[
+    [
+        remove_corrupted_img(os.path.join(root, file))
+        for file in files if file.endswith(".jpg")
+    ]
+    for root, dirs, files in os.walk(sys.argv[1])
+]
