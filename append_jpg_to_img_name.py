@@ -5,11 +5,11 @@ import sys
 def main():
     folder = sys.argv[1]  # must include the final '/'
 
-    files = os.listdir(folder)
-
-    for file in files:
-        if "jpg" not in file:
-            os.rename(f"{folder}{file}", f"{folder}{file}.jpg")
+    [
+        os.rename(f"{folder}{file}", f"{folder}{file}.jpg")
+        for file in os.listdir(folder)
+        if "jpg" not in file
+    ]
 
 
 if __name__ == '__main__':
