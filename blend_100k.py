@@ -39,7 +39,7 @@ def main():
     imgs = os.listdir(src_folder)
 
     n = 0
-    # pbar = tqdm(total=NUM_IMGS + 1)
+
     while n < NUM_IMGS:
         name1 = random.choice(imgs)
         name2 = random.choice(imgs)
@@ -47,9 +47,8 @@ def main():
             cv2.imwrite(f"{trgt_folder}{remove_file_extension(name1)}_{name2}", blend_image(
                 cv2.imread(f"{src_folder}{name1}"), cv2.imread(f"{src_folder}{name2}"), size))
             n += 1
-            # pbar.update(1)
-            print(f"Progress: {n}")
-        # pbar.close()
+            if n % 100 == 0:
+                print(f"Progress: {n}")
 
 
 if __name__ == '__main__':
