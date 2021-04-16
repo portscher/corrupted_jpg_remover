@@ -3,11 +3,10 @@ import os
 import random
 
 import cv2
-from tqdm import tqdm
 
 random.seed(123)
 
-NUM_IMGS = 100000
+NUM_IMGS = 42840
 
 
 def blend_image(src1, src2, size, alpha=0.5):
