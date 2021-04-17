@@ -6,7 +6,7 @@ import cv2
 
 random.seed(123)
 
-NUM_IMGS = 42840
+NUM_IMGS = 1000
 
 
 def blend_image(src1, src2, size, alpha=0.5):
