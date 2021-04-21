@@ -6,8 +6,6 @@ import cv2
 
 random.seed(123)
 
-NUM_IMGS = 1000
-
 
 def blend_image(src1, src2, size, alpha=0.5):
     src1 = cv2.resize(src1, (size, size))
@@ -25,6 +23,7 @@ def get_class_from_filename(filename):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument('-a', '--amount', type=int, required=True)
     parser.add_argument('-src', '--source', required=True)
     parser.add_argument('-trg', '--target', required=True)
     parser.add_argument('-size', '--size', type=int, required=True)
@@ -39,7 +38,8 @@ def main():
 
     n = 0
 
-    while n < NUM_IMGS:
+    amount = args.amount
+    while n < amount:
         name1 = random.choice(imgs)
         name2 = random.choice(imgs)
         if get_class_from_filename(name1) not in name2:
