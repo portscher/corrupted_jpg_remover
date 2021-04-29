@@ -23,7 +23,6 @@ def get_class_from_filename(filename):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-a', '--amount', type=int, required=True)
     parser.add_argument('-src', '--source', required=True)
     parser.add_argument('-trg', '--target', required=True)
     parser.add_argument('-size', '--size', type=int, required=True)
@@ -36,18 +35,19 @@ def main():
 
     imgs = os.listdir(src_folder)
 
-    n = 0
-
-    amount = args.amount
-    while n < amount:
-        name1 = random.choice(imgs)
-        name2 = random.choice(imgs)
-        if get_class_from_filename(name1) not in name2:
-            cv2.imwrite(f"{trgt_folder}{remove_file_extension(name1)}_{name2}", blend_image(
-                cv2.imread(f"{src_folder}{name1}"), cv2.imread(f"{src_folder}{name2}"), size))
-            n += 1
-            if n % 100 == 0:
-                print(f"Progress: {n}")
+    ctr = 0
+    for name1 in imgs:
+        img1 = cv2.imread(f"{src_folder}{name1}")
+        same_class = True
+        while same_class:
+            name2 = random.choice(imgs)
+            if get_class_from_filename(name1) not in name2:
+                same_class = False
+        img2 = cv2.imread(f"{src_folder}{name2}")
+        cv2.imwrite(f"{trgt_folder}{remove_file_extension(name1)}_{name2}", blend_image(img1, img2, size))
+        ctr += 1
+        if ctr % 100:
+            print(ctr)
 
 
 if __name__ == '__main__':
