@@ -1,10 +1,10 @@
 import argparse
-import os
 import random
 
 import cv2
+import pandas as pd
 
-random.seed(123)
+random.seed(1337)
 
 
 def blend_image(src1, src2, size, alpha=0.5):
@@ -23,17 +23,20 @@ def get_class_from_filename(filename):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument('-csv', '--csv', required=True)
     parser.add_argument('-src', '--source', required=True)
     parser.add_argument('-trg', '--target', required=True)
     parser.add_argument('-size', '--size', type=int, required=True)
 
     args = parser.parse_args()
 
+    csv = args.csv
     src_folder = args.source
     trgt_folder = args.target
     size = args.size
 
-    imgs = os.listdir(src_folder)
+    csv_df = pd.read_csv(csv)
+    imgs = csv_df['image'].tolist()
 
     ctr = 0
     for name1 in imgs:
@@ -45,6 +48,7 @@ def main():
                 if get_class_from_filename(name1) not in name2:
                     same_class = False
             img2 = cv2.imread(f"{src_folder}{name2}")
+            print(f"Reading {src_folder}{name2}")
             cv2.imwrite(f"{trgt_folder}{remove_file_extension(name1)}_{name2}", blend_image(img1, img2, size))
             ctr += 1
 
